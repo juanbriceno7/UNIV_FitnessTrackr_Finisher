@@ -80,6 +80,7 @@ export async function fetchUserRoutines(username) {
             return false;
         }
         else {
+            console.log(result);
             return result;
         }
     } catch (err) {
@@ -282,7 +283,7 @@ export async function addActivity(token, name, description) {
     }
 }
 
-export async function editActivity(token, activityId, name, description) {
+export async function editActivity(token, activityId, oldName, name, description) {
     try {
         const response = await fetch(`${BASE_URL}/activities/${activityId}`, {
             method: "PATCH",
@@ -291,6 +292,7 @@ export async function editActivity(token, activityId, name, description) {
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
+                oldName,
                 name,
                 description
             })
@@ -365,7 +367,6 @@ export async function deleteRoutineActivity(routineActivityId, token) {
             }
         });
         const result = await response.json();
-        console.log(result);
         if (result.error) {
             alert(result.message);
             return false;

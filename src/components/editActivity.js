@@ -4,11 +4,12 @@ import { editActivity } from "../api";
 const EditActivity = ({token, activity, setIsEditMode}) => {
     const [newName, setNewName] = useState(activity.name)
     const [newDescription, setNewDescription] = useState(activity.description)
+    const oldName = activity.name;
 
     async function submitHandler(event) {
         event.preventDefault();
         try {
-            const response = await editActivity(token, activity.id, newName, newDescription);
+            const response = await editActivity(token, activity.id, oldName, newName, newDescription);
             if (response) {
                 setIsEditMode(false);
             }

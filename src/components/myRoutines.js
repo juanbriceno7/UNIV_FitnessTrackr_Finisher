@@ -31,7 +31,7 @@ const MyRoutines = ({userInfo, routines, setRoutines}) => {
                             {routine.activities.map(activity => {
                                 return(
                                     <div key={activity.id}>
-                                        <p>{activity.name}</p>
+                                        <p><Link to={`/activities/${activity.id}`}>{activity.name}</Link></p>
                                         <p>{activity.description}</p>
                                         {activity.duration && (
                                             <p>Duration: {activity.duration}</p>

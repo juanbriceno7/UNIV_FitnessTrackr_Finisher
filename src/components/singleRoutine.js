@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams} from 'react-router-dom';
-import { deleteRoutine, deleteRoutineActivity, fetchRoutineActivitiesByRoutine } from '../api';
+import { Link, useNavigate, useParams} from 'react-router-dom';
+import { deleteRoutine, deleteRoutineActivity, fetchAllRoutines, fetchRoutineActivitiesByRoutine, fetchUserRoutines } from '../api';
 import { EditRoutine, AddActivityToRoutine, EditRoutineActivity } from './index'
 
-const SingleRoutine = ({routines, userInfo, token}) => {
+const SingleRoutine = ({routines, setRoutines, userInfo, token}) => {
     const { routineId } = useParams();
-    const routine = routines.find(correctRoutine => correctRoutine.id === parseInt(routineId));
+    const [routine, setRoutine] = useState(routines.find(correctRoutine => correctRoutine.id === parseInt(routineId)));
     const [routineActivities, setRoutineActivities] = useState([]);
     const [routineActivity, setRoutineActivity] = useState({});
     const [isEditMode, setIsEditMode] = useState(false);
@@ -25,6 +25,29 @@ const SingleRoutine = ({routines, userInfo, token}) => {
         }
         fetchRoutineActivities();
     }, [isEditMode, isAddMode, setRoutineActivities, token])
+
+    useEffect(() => {
+        async function refetch() {
+            if (token !== '') {
+                const publicRoutines = await fetchAllRoutines();
+                const userRoutines = await fetchUserRoutines(userInfo.username);
+                const privateRoutines = userRoutines.filter(routine => routine.isPublic === false);
+                setRoutines(publicRoutines.concat(privateRoutines));
+
+                const refetchRoutine = publicRoutines.concat(privateRoutines).find(correctRoutine => correctRoutine.id === parseInt(routineId));
+                setRoutine(refetchRoutine);
+            }
+            else {
+                const refetchRoutines = await fetchAllRoutines();
+                setRoutines(refetchRoutines);
+
+                const refetchRoutine = refetchRoutines.find(correctRoutine => correctRoutine.id === parseInt(routineId));
+                setRoutine(refetchRoutine);
+            }
+
+        }
+        refetch();
+    }, [isEditMode, isAddMode, isRAEditMode, setRoutine, setRoutines, token])
 
     async function editHelper(activityId) {
         const getroutineActivity = routineActivities.find(routineActivity => routineActivity.activityId = activityId);
@@ -49,7 +72,7 @@ const SingleRoutine = ({routines, userInfo, token}) => {
                 {isEditMode ? 
                     <EditRoutine token={token} routine={routine} userInfo={userInfo} setIsEditMode={setIsEditMode}/> :
                 isAddMode ? 
-                    <AddActivityToRoutine token={token} routineId={routine.id} setIsAddMode={setIsAddMode}/> :
+                    <AddActivityToRoutine token={token} routine={routine} setIsAddMode={setIsAddMode}/> :
                 isRAEditMode ?
                     <EditRoutineActivity token={token} routineActivity={routineActivity} setIsRAEditMode={setIsRAEditMode}/> :
 
@@ -60,7 +83,7 @@ const SingleRoutine = ({routines, userInfo, token}) => {
                     {routine.activities.map(activity => {
                                 return(
                                     <div key={activity.id}>
-                                        <p>{activity.name}</p>
+                                        <p><Link to={`/activities/${activity.id}`}>{activity.name}</Link></p>
                                         <p>{activity.description}</p>
                                         {activity.duration && (
                                             <p>Duration: {activity.duration}</p>
@@ -76,13 +99,13 @@ const SingleRoutine = ({routines, userInfo, token}) => {
                     {routine.creatorId === userInfo.id && (
                         <>
                         <button onClick={() => setIsAddMode(true)}>Add Activity</button>
-                        <button onClick={() => setIsEditMode(true)}>Edit</button>
+                        <button onClick={() => setIsEditMode(true)}>Edit Routine</button>
                         <button onClick={async () => {
                             const success = await deleteRoutine(routine.id, token);
                             if (success) {
                                 navigate('/myroutines');
                             }
-                            }}>Delete</button>
+                            }}>Delete Routine</button>
                         </> 
                     )}
                     </>

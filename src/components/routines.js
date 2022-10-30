@@ -42,13 +42,13 @@ const Routines = ({routines, setRoutines, userInfo, token}) => {
                 return (
                     <div key={routine.id}>
                         <h3><Link to={`/routines/${routine.id}`}>{routine.name}</Link></h3>
-                        <span>{routine.creatorName}</span>
+                        <span><Link to={`/users/${routine.creatorId}`}>{routine.creatorName}</Link></span>
                         <p>{routine.goal}</p>
                         <h4>Activities</h4>
                         {routine.activities.map(activity => {
                             return(
                                 <div key={activity.id}>
-                                    <p>{activity.name}</p>
+                                    <p><Link to={`/activities/${activity.id}`}>{activity.name}</Link></p>
                                     <p>{activity.description}</p>
                                     {activity.duration && (
                                         <p>Duration: {activity.duration}</p>
@@ -68,13 +68,13 @@ const Routines = ({routines, setRoutines, userInfo, token}) => {
                 return (
                     <div key={routine.id}>
                         <h3><Link to={`/routines/${routine.id}`}>{routine.name}</Link></h3>
-                        <p>{routine.creatorName}</p>
+                        <span><Link to={`/users/${routine.creatorId}`}>{routine.creatorName}</Link></span>
                         <p>{routine.goal}</p>
                         <h4>Activities</h4>
                         {routine.activities.map(activity => {
                             return(
                                 <div key={activity.id}>
-                                    <p>{activity.name}</p>
+                                    <p><Link to={`/activities/${activity.id}`}>{activity.name}</Link></p>
                                     <p>{activity.description}</p>
                                     {activity.duration && (
                                         <p>Duration: {activity.duration}</p>

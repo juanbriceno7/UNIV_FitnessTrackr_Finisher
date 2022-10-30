@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { addActivityToRoutine, fetchAllActivities } from "../api";
 
-const AddActivityToRoutine = ({token, routineId, setIsAddMode}) => {
+const AddActivityToRoutine = ({token, routine, setIsAddMode}) => {
     const [activityList, setActivityList] = useState([]);
     const [activityId, setActivityId] = useState('');
     const [count, setCount] = useState('');
@@ -11,7 +11,16 @@ const AddActivityToRoutine = ({token, routineId, setIsAddMode}) => {
         async function fetchActivities() {
             try {
                 const results = await fetchAllActivities();
-                setActivityList(results);
+                const exclusions = routine.activities;
+                const filteredResults = []
+                for (let i = 0; i < results.length; i++) {
+                    for (let j = 0; j < exclusions.length; j++) {
+                        if (results[i].id !== exclusions[j].id) {
+                            filteredResults.push(results[i]);
+                        }
+                    }
+                }
+                setActivityList(filteredResults);
             } catch (err) {
                 console.error(err);
             }
@@ -22,9 +31,8 @@ const AddActivityToRoutine = ({token, routineId, setIsAddMode}) => {
     async function submitHandler(event) {
         event.preventDefault();
         try {
-            console.log(activityId);
             if (activityId) {
-                const response = await addActivityToRoutine(token, routineId, activityId, count, duration)
+                const response = await addActivityToRoutine(token, routine.id, activityId, count, duration)
                 if (response) {
                     setIsAddMode(false);
                 }

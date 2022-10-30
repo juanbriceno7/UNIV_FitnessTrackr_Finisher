@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchRoutinesByActivity } from '../api';
+import { fetchAllActivities, fetchRoutinesByActivity } from '../api';
 import { EditActivity } from './index'
 
-const SingleActivity = ({activities, userInfo, token}) => {
+const SingleActivity = ({activities, setActivities, userInfo, token}) => {
     const { activityId } = useParams();
-    const activity = activities.find(correctActivity => correctActivity.id === parseInt(activityId));
+    const [activity, setActivity] = useState(
+        activities.find(correctActivity => correctActivity.id === parseInt(activityId))
+        ) 
     const [activityRoutines, setActivityRoutines] = useState([]);
-    const [isEditmode, setIsEditMode] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
 
     useEffect(() => {
-        async function fetchRoutines() {
+        async function fetchActivityRoutines() {
             try {
                     const results = await fetchRoutinesByActivity(activityId);
                     setActivityRoutines(results);
@@ -19,8 +21,19 @@ const SingleActivity = ({activities, userInfo, token}) => {
                 console.error(err);
             }
         }
-        fetchRoutines();
-    }, [isEditmode, setActivityRoutines, token])
+        fetchActivityRoutines();
+    }, [isEditMode, setActivityRoutines, token])
+
+    useEffect(() => {
+        async function refetch() {
+            const refetchActivities = await fetchAllActivities();
+            setActivities(refetchActivities);
+
+            const refetchActivity = refetchActivities.find(correctActivity => correctActivity.id === parseInt(activityId));
+            setActivity(refetchActivity)
+        }
+        refetch();
+    }, [isEditMode, setActivity, setActivities, token])
 
     if (!activity) {
         return <h1>No Activities Found</h1>;
@@ -29,12 +42,12 @@ const SingleActivity = ({activities, userInfo, token}) => {
         return (
             <div>
                 <section>
-                    {isEditmode ? 
+                    {isEditMode ? 
                         <EditActivity token={token} activity={activity} userInfo={userInfo} setIsEditMode={setIsEditMode}/> :
                         <>
                         <h2>{activity.name}</h2>
                         <p>{activity.description}</p>
-                        <button onClick={() => setIsEditMode(true)}>Edit</button>
+                        <button onClick={() => setIsEditMode(true)}>Edit Activity</button>
                         </>
                     }
                 </section>
