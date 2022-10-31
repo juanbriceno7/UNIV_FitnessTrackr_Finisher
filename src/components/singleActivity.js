@@ -40,27 +40,36 @@ const SingleActivity = ({activities, setActivities, userInfo, token}) => {
     }
     else {
         return (
-            <div>
+            <div className='ms-5'>
                 <section>
                     {isEditMode ? 
                         <EditActivity token={token} activity={activity} userInfo={userInfo} setIsEditMode={setIsEditMode}/> :
                         <>
-                        <h2>{activity.name}</h2>
-                        <p>{activity.description}</p>
-                        <button onClick={() => setIsEditMode(true)}>Edit Activity</button>
+                        <header className='d-flex'>
+                            <h2 className='flex-grow-1'>{activity.name}</h2>
+                            {token !== '' && (
+                                <button className="btn btn-primary" onClick={() => setIsEditMode(true)}>Edit Activity</button>
+                            )}
+                        </header>
+                        <p className="description">{activity.description}</p>
                         </>
                     }
                 </section>
                 <section>
-                    {activityRoutines.map(routine => {
-                    return (
-                        <div key={routine.id}>
-                            <h3><Link to={`/routines/${routine.id}`}>{routine.name}</Link></h3>
-                            <span>{routine.creatorName}</span>
-                            <p>{routine.goal}</p>
-                        </div>
-                    )
-                })}
+                    {!isEditMode && (
+                        activityRoutines.map(routine => {
+                        return (
+                            <div key={routine.id} className='card m-2'>
+                                <div className='card-body'>
+                                    <header className='d-flex'>
+                                        <h3 className='flex-grow-1'><Link to={`/routines/${routine.id}`}>{routine.name}</Link></h3>
+                                        <span><Link to={`/users/${routine.creatorId}`}>{routine.creatorName}</Link></span>
+                                    </header>
+                                    <p className="description">{routine.goal}</p>
+                                </div>
+                            </div>
+                        )
+                }))}
                 </section>
             </div>
         )

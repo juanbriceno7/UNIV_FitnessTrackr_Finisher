@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { addRoutine } from "../api";
 
-const AddRoutine = ({token, setUserInfo}) => {
+const AddRoutine = ({token}) => {
     const [name, setName] = useState('')
     const [goal, setGoal] = useState('')
     const [isPublic, setIsPublic] = useState(false)
@@ -22,32 +22,32 @@ const AddRoutine = ({token, setUserInfo}) => {
     }
     if (token !== '') {
         return (
-            <div>
+            <div className="ms-5 mb-2" >
                 <header>
                     <h3>Add Routine</h3>
                 </header>
                 <form onSubmit={submitHandler}>
-                    <div>
-                        <label htmlFor="name">Name:</label>
-                        <div>
-                            <input type="text" id="name" onChange={event => setName(event.target.value)} required></input>
+                    <div className="row mb-2">
+                        <label htmlFor="name" className="col-form-label">Name:</label>
+                        <div className="col-sm-5">
+                            <input type="text" id="name" className="form-control" onChange={event => setName(event.target.value)} required></input>
                         </div>
                     </div>
-                    <div>
-                        <label htmlFor="goal">Goal:</label>
-                        <div>
-                            <textarea id="goal" onChange={event => setGoal(event.target.value)} required></textarea>
+                    <div className="row mb-2">
+                        <label htmlFor="goal" className="col-form-label">Goal:</label>
+                        <div className="col-sm-5">
+                            <textarea id="goal"  className="form-control" onChange={event => setGoal(event.target.value)} required></textarea>
                         </div>
                     </div>
-                    <div>
-                        <input type="checkbox" id="isPublic" 
+                    <div className="form-check mb-3">
+                        <input  className="form-check-input" type="checkbox" id="isPublic" 
                         onChange={event => event.target.value === 'on' ? 
                         setIsPublic(true) :
                         setIsPublic(false)}></input>
-                        <label htmlFor="isPublic">Make Routine Public?</label>
+                        <label htmlFor="isPublic" className="form-check-label">Make Routine Public?</label>
                     </div>
-                    <button type="submit">Add Routine</button>
-                    <button onClick={() => navigate('/myroutines')}>Cancel</button>
+                    <button type="submit" className="btn btn-primary me-2">Add Routine</button>
+                    <button className="btn btn-danger" onClick={() => navigate('/myroutines')}>Cancel</button>
                 </form>
             </div>
         )

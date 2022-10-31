@@ -19,25 +19,25 @@ const EditActivity = ({token, activity, setIsEditMode}) => {
         }
     }
     return (
-        <div>
+        <div className="ms-5 mb-2">
             <header>
                 <h3>Edit Activity</h3>
             </header>
             <form onSubmit={submitHandler}>
-                <div>
-                    <label htmlFor="name">Name:</label>
-                    <div>
-                        <input type="text" id="name" value={newName} onChange={event => setNewName(event.target.value)} required></input>
+                <div className="row mb-2">
+                    <label htmlFor="name" className="col-form-label">Name:</label>
+                    <div className="col-sm-5">
+                        <input type="text" id="name" className="form-control" value={newName} onChange={event => setNewName(event.target.value)} required></input>
                     </div>
                 </div>
-                <div>
-                    <label htmlFor="description">Description:</label>
-                    <div>
-                        <textarea id="description" value={newDescription} onChange={event => setNewDescription(event.target.value)} required></textarea>
+                <div className="row mb-2">
+                    <label htmlFor="description" className="col-form-label">Description:</label>
+                    <div className="col-sm-5">
+                        <textarea id="description" className="form-control" value={newDescription} onChange={event => setNewDescription(event.target.value)} required></textarea>
                     </div>
                 </div>
-                <button type="submit">Submit</button>
-                <button onClick={() => setIsEditMode(false)}>Cancel</button>
+                <button type="submit" className="btn btn-primary me-2">Submit</button>
+                <button className="btn btn-danger" onClick={() => setIsEditMode(false)}>Cancel</button>
             </form>
         </div>
     )

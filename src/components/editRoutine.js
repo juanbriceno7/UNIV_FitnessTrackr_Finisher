@@ -20,39 +20,39 @@ const EditRoutine = ({token, routine, userInfo, setIsEditMode}) => {
     }
     if (routine.creatorId === userInfo.id) {
         return (
-            <div>
+            <div className="ms-5 mb-2">
                 <header>
                     <h3>Edit Routine</h3>
                 </header>
                 <form onSubmit={submitHandler}>
-                    <div>
-                        <label htmlFor="name">Name:</label>
-                        <div>
-                            <input type="text" id="name" value={newName} onChange={event => setNewName(event.target.value)} required></input>
+                    <div className="row mb-2">
+                        <label htmlFor="name" className="col-form-label">Name:</label>
+                        <div className="col-sm-5">
+                            <input type="text" id="name" className="form-control" value={newName} onChange={event => setNewName(event.target.value)} required></input>
                         </div>
                     </div>
-                    <div>
-                        <label htmlFor="goal">Goal:</label>
-                        <div>
-                            <textarea id="goal" value={newGoal} onChange={event => setNewGoal(event.target.value)} required></textarea>
+                    <div className="row mb-2">
+                        <label htmlFor="goal" className="col-form-label">Goal:</label>
+                        <div className="col-sm-5">
+                            <textarea id="goal" className="form-control" value={newGoal} onChange={event => setNewGoal(event.target.value)} required></textarea>
                         </div>
                     </div>
-                    <div>
+                    <div className="form-check mb-3">
                         {newIsPublic ? 
-                        <input type="checkbox" id="isPublic" value={newIsPublic} checked={true}
+                        <input type="checkbox" id="isPublic" className="form-check-input" value={newIsPublic} checked={true}
                         onChange={event => event.target.value === 'false' ? 
                         setNewIsPublic(true) :
                         setNewIsPublic(false)}></input>
                         :
-                        <input type="checkbox" id="isPublic" value={newIsPublic}
+                        <input type="checkbox" id="isPublic" className="form-check-input" value={newIsPublic}
                         onChange={event => event.target.value === 'false' ? 
                         setNewIsPublic(true) :
                         setNewIsPublic(false)}></input>
                         }
-                        <label htmlFor="isPublic">Make Routine Public?</label>
+                        <label htmlFor="isPublic" className="form-check-label">Make Routine Public?</label>
                     </div>
-                    <button type="submit">Submit</button>
-                    <button onClick={() => setIsEditMode(false)}>Cancel</button>
+                    <button type="submit" className="btn btn-primary me-2">Submit</button>
+                    <button className="btn btn-danger" onClick={() => setIsEditMode(false)}>Cancel</button>
                 </form>
             </div>
         )

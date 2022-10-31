@@ -22,10 +22,10 @@ const Activities = ({activities, setActivities, token}) => {
 
     return (
         <div>
-            <header>
-                <h1>Activities</h1>
+            <header className='m-3 d-flex'>
+                <h1 className='flex-grow-1'>Activities</h1>
                 {token !== '' && (
-                    <button type="button" onClick={() => navigate('/addactivity')}>Add Activity</button>
+                    <button type="button" className="btn btn-primary" onClick={() => navigate('/addactivity')}>Add Activity</button>
                 )}
             </header>
             <section>
@@ -35,9 +35,11 @@ const Activities = ({activities, setActivities, token}) => {
             <section>
             {activities.map(activity => {
                 return (
-                    <div key={activity.id}>
-                        <h3><Link to={`/activities/${activity.id}`}>{activity.name}</Link></h3>
-                        <p>{activity.description}</p>
+                    <div key={activity.id} className='card m-2'>
+                        <div className='card-body'>
+                            <h3><Link to={`/activities/${activity.id}`}>{activity.name}</Link></h3>
+                            <p className='description'>{activity.description}</p>
+                        </div>
                     </div>
                 )
             })}
@@ -45,9 +47,11 @@ const Activities = ({activities, setActivities, token}) => {
             <section>
             {filteredActivites.map(activity => {
                 return (
-                    <div key={activity.id}>
-                        <h3><Link to={`/activities/${activity.id}`}>{activity.name}</Link></h3>
-                        <p>{activity.description}</p>
+                    <div key={activity.id} className='card m-2'>
+                        <div className='card-body'>
+                            <h3><Link to={`/activities/${activity.id}`}>{activity.name}</Link></h3>
+                            <p className='description'>{activity.description}</p>
+                        </div>
                     </div>
                 )
             })}

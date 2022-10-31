@@ -23,18 +23,18 @@ const Login = (props) => {
     }
     return (
         <>
-            <header>
+            <header className="ms-5 mb-3">
                 <h3>Log In</h3>
             </header>
-            <div>
+            <div className="ms-5">
                 <form onSubmit={submitHandler}>
-                    <div>
-                        <input type="text" placeholder='Username' onChange={event => setUsername(event.target.value)} required></input>
+                    <div className="mb-3 col-sm-5">
+                        <input type="text" className="form-control" placeholder='Username' onChange={event => setUsername(event.target.value)} required></input>
                     </div>
-                    <div>
-                        <input type="password" placeholder='Password' onChange={event => setPassword(event.target.value)} required></input>
+                    <div className="mb-3 col-sm-5">
+                        <input type="password" className="form-control" placeholder='Password' onChange={event => setPassword(event.target.value)} required></input>
                     </div>
-                    <button type="submit">Log In</button>
+                    <button type="submit" className="btn btn-primary mb-3">Log In</button>
                 </form>
                 <Link to='/register'>Sign Up</Link>
             </div>

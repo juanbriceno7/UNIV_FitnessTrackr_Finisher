@@ -80,7 +80,6 @@ export async function fetchUserRoutines(username) {
             return false;
         }
         else {
-            console.log(result);
             return result;
         }
     } catch (err) {

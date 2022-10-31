@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Link, Routes, Route} from 'react-router-dom';
 import { fetchUserInfo } from './api';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
     Home,
     Login,
@@ -32,8 +33,8 @@ const App = () => {
         if (token !== '') {
             return (
                 <>
-                <Link to='/myroutines'>My Routines</Link>
-                <Link to='/routines' onClick={logOut}>Log Out</Link>
+                <Link to='/myroutines' className='m-2 text-white'>My Routines</Link>
+                <Link to='/routines' className='m-2 text-white' onClick={logOut}>Log Out</Link>
                 </>
             )
         }
@@ -58,13 +59,13 @@ const App = () => {
 
     return (
         <div className="App">
-            <header>
-                <div>
-                    <h3>Fitness Trac.kr</h3>
-                    <div>
-                    <Link to='/'>Home</Link>
-                    <Link to='/routines'>Routines</Link>
-                    <Link to='/activities'>Activities</Link>
+            <header className='bg-secondary text-white mb-2 pb-1'>
+                <div className='d-flex ms-3 pt-2'>
+                    <h3 className='flex-grow-1'>Fitness Trac.kr</h3>
+                    <div className='align-self-end'>
+                    <Link to='/' className='m-2 text-white'>Home</Link>
+                    <Link to='/routines' className='m-2 text-white'>Routines</Link>
+                    <Link to='/activities' className='m-2 text-white'>Activities</Link>
                     {makeHeaders()}
                     </div>
                 </div>

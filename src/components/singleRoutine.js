@@ -68,7 +68,7 @@ const SingleRoutine = ({routines, setRoutines, userInfo, token}) => {
     }
     else {
         return (
-            <div>
+            <div className='ms-5'>
                 {isEditMode ? 
                     <EditRoutine token={token} routine={routine} userInfo={userInfo} setIsEditMode={setIsEditMode}/> :
                 isAddMode ? 
@@ -78,29 +78,35 @@ const SingleRoutine = ({routines, setRoutines, userInfo, token}) => {
 
                     <>
                     <h2>{routine.name}</h2>
-                    <p>{routine.goal}</p>
-                    <h4>Activities</h4>
+                    <p className="description">{routine.goal}</p>
+                    {routine.activities.length > 0 && (<h4>Activities</h4>)}
                     {routine.activities.map(activity => {
                                 return(
-                                    <div key={activity.id}>
-                                        <p><Link to={`/activities/${activity.id}`}>{activity.name}</Link></p>
-                                        <p>{activity.description}</p>
-                                        {activity.duration && (
-                                            <p>Duration: {activity.duration}</p>
-                                        )}
-                                        {activity.count && (
-                                            <p>Count: {activity.count}</p>
-                                        )}
-                                        <button onClick={() => {editHelper(activity.id)}}>Edit Activity</button>
-                                        <button onClick={() => {deleteHelper(activity.id)}}>Remove Activity</button>
+                                    <div key={activity.id} className='card m-2'>
+                                        <div className='card-body'>
+                                            <p><Link to={`/activities/${activity.id}`}>{activity.name}</Link></p>
+                                            <p className="description">{activity.description}</p>
+                                            {activity.duration && (
+                                                <p>Duration: {activity.duration}</p>
+                                            )}
+                                            {activity.count && (
+                                                <p>Count: {activity.count}</p>
+                                            )}
+                                            {token !== '' && (
+                                                <>
+                                                <button className="btn btn-primary me-2" onClick={() => {editHelper(activity.id)}}>Edit Activity</button>
+                                                <button className="btn btn-danger" onClick={() => {deleteHelper(activity.id)}}>Remove Activity</button>
+                                                </>
+                                            )}
+                                        </div>
                                     </div>
                                 )
                             })}
                     {routine.creatorId === userInfo.id && (
                         <>
-                        <button onClick={() => setIsAddMode(true)}>Add Activity</button>
-                        <button onClick={() => setIsEditMode(true)}>Edit Routine</button>
-                        <button onClick={async () => {
+                        <button className="btn btn-primary me-2" onClick={() => setIsAddMode(true)}>Add Activity</button>
+                        <button className="btn btn-primary me-2" onClick={() => setIsEditMode(true)}>Edit Routine</button>
+                        <button className="btn btn-danger" onClick={async () => {
                             const success = await deleteRoutine(routine.id, token);
                             if (success) {
                                 navigate('/myroutines');

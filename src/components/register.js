@@ -23,24 +23,24 @@ const Register = (props) => {
     }
     return (
         <>
-            <header>
+            <header className="ms-5 mb-3">
                 <h2>Register</h2>
             </header>
-            <div>
+            <div className="ms-5">
                 <form onSubmit={submitHandler}>
-                <div>
-                    <label htmlFor="username">Username</label>
-                    <div>
-                        <input type="text" id="username" onChange={event => setUsername(event.target.value)} required></input>
-                    </div>
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
+                <div className="row mb-2">
+                    <label htmlFor="username" className="col-form-label">Username</label>
                     <div className="col-sm-5">
-                        <input type="password" id="password" onChange={event => setPassword(event.target.value)} required></input>
+                        <input type="text" id="username" className="form-control" onChange={event => setUsername(event.target.value)} required></input>
                     </div>
                 </div>
-                <button type="submit">Sign Up</button>
+                <div className="row mb-3">
+                    <label htmlFor="password" className="col-form-label">Password</label>
+                    <div className="col-sm-5">
+                        <input type="password" id="password" className="form-control" onChange={event => setPassword(event.target.value)} required></input>
+                    </div>
+                </div>
+                <button type="submit" className="btn btn-primary">Sign Up</button>
                 </form>
             </div>
         </>

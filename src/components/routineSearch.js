@@ -14,6 +14,7 @@ const RoutineSearch = ({routines, searchValue, setSearchValue, setFilteredRoutin
         <div>
             <input
             type="text"
+            className="search ms-3"
             placeholder="Search for a routine"
             value={searchValue}
             onChange={event => setSearchValue(event.target.value)}

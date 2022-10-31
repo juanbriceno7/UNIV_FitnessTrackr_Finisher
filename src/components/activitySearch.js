@@ -14,6 +14,7 @@ const ActivitySearch = ({activities, searchValue, setSearchValue, setFilteredAct
         <div>
             <input
             type="text"
+            className="search ms-3"
             placeholder="Search for an activity"
             value={searchValue}
             onChange={event => setSearchValue(event.target.value)}
